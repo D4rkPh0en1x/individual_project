@@ -1,3 +1,4 @@
+<h1>Welcome to the streaming Movie Database</h1>
 <?php 
 session_start();
 
@@ -12,7 +13,8 @@ $map = [
     '/account' => __DIR__.'/../src/Controller/account.php',
     '' => __DIR__.'/../src/Controller/login.php',
     '/register' => __DIR__.'/../src/Controller/register.php',
-    '/login' => __DIR__.'/../src/Controller/login.php'
+    '/login' => __DIR__.'/../src/Controller/login.php',
+    '/logout' => __DIR__.'/../src/Controller/logout.php'
 ];
 
 $url = $_SERVER['REQUEST_URI'];
