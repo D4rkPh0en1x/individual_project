@@ -25,61 +25,48 @@ if ( null==$id ) {
 }
 
 if ( !empty($_POST)) {
-    // keep track validation errors
-    $nameError = null;
-    $emailError = null;
-    $mobileError = null;
-    
-    // keep track post values
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $mobile = $_POST['mobile'];
-    
-    // validate input
+
+    $movienameError = null;
+
+
+    $moviename = $_POST['moviename'];
+    $movieyear = $_POST['movieyear'];
+    $moviequality = $_POST['moviequality'];
+    $moviedescription = $_POST['moviedescription'];
+
     $valid = true;
-    if (empty($name)) {
-        $nameError = 'Please enter Name';
+    if (empty($moviename)) {
+        $nameError = 'Please enter Movie Name';
         $valid = false;
     }
     
-    if (empty($email)) {
-        $emailError = 'Please enter Email Address';
-        $valid = false;
-    } else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
-        $emailError = 'Please enter a valid Email Address';
+    if (empty($movieyear)) {
+        $nameError = 'Please enter Year';
         $valid = false;
     }
     
-    if (empty($mobile)) {
-        $mobileError = 'Please enter Mobile Number';
+    if (empty($moviequality)) {
+        $nameError = 'Please enter the quality';
         $valid = false;
     }
     
-    // update data
+
     if ($valid) {
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE customers  set name = ?, email = ?, mobile =? WHERE id = ?";
-        $q = $pdo->prepare($sql);
-        $q->execute(array($name,$email,$mobile,$id));
-        Database::disconnect();
-        header("Location: index.php");
+        $sql = "UPDATE movies set name = ?, year = ?, quality = ?, description = ? WHERE id = ?";
+        $statement = $connection->prepare($sql);
+     
+        $statement->execute(array($moviename,$movieyear,$moviequality,$moviedescription,$id));
+        
+        header("Location: /index.php/account");
     }
 } else {
     
-    
-    
-    
-    
+      
     $sql = 'SELECT * FROM movies WHERE id = ?';
     $statement = $connection->prepare($sql);
     
     $statement->execute(array($id));
-    
-    
-    // $resultall = $connection->query($sql); //pay attention if use exec or query -> unsecure
-    
-    //case of fetchall
+
     $resultall = $statement->fetchall();
     
     foreach ($resultall as $row){
@@ -87,14 +74,6 @@ if ( !empty($_POST)) {
         $moviename=$row['name'];
         $movieyear=$row['year'];
         $moviequality=$row['quality'];
-        
-        if ($moviequality == 0) {
-            $moviequality = "SD - Standart Definition";
-        }
-        
-        if ($moviequality == 1) {
-            $moviequality = "HD - High Definition";
-        }
         $moviedescription=$row['description'];
     
 }
@@ -105,7 +84,7 @@ if ( !empty($_POST)) {
 
 
 
-                    <form class="form-horizontal" action="/index.php/update.php?id=<?php echo $id?>" method="post">
+                    <form class="form-horizontal" action="/index.php/update?id=<?php echo $id?>" method="post">
                       <div class="control-group <?php echo !empty($movienameError)?'error':'';?>">
                         <label class="control-label">Movie Name</label>
                         <div class="controls">
@@ -115,7 +94,36 @@ if ( !empty($_POST)) {
                             <?php endif; ?>
                         </div>
                       </div>
-                   
+                       <div class="control-group <?php echo !empty($movieyearError)?'error':'';?>">
+                        <label class="control-label">Movie Year</label>
+                        <div class="controls">
+                            <input name="movieyear" type="text"  placeholder="Movie Year" value="<?php echo !empty($movieyear)?$movieyear:'';?>">
+                            <?php if (!empty($movieyearError)): ?>
+                                <span class="help-inline"><?php echo $movieyearError;?></span>
+                            <?php endif; ?>
+                        </div>
+                      </div>                  
+                      
+                        <div class="control-group <?php echo !empty($moviequalityError)?'error':'';?>">
+                        <label class="control-label">Movie Quality (1=HD / 2=SD)</label>
+                        <div class="controls">
+                            <input name="moviequality" type="text"  placeholder="Movie Quality" value="<?php echo !empty($moviequality)?$moviequality:'';?>">
+                            <?php if (!empty($moviequalityError)): ?>
+                                <span class="help-inline"><?php echo $moviequalityError;?></span>
+                            <?php endif; ?>
+                        </div>
+                      </div>                        
+                      
+                       <div class="control-group <?php echo !empty($moviedescriptionError)?'error':'';?>">
+                        <label class="control-label">Movie Description</label>
+                        <div class="controls">
+                            <input name="moviedescription" type="text" placeholder="Movie Description" value="<?php echo !empty($moviedescription)?$moviedescription:'';?>">
+                            <?php if (!empty($moviedescriptionError)): ?>
+                                <span class="help-inline"><?php echo $moviedescriptionError;?></span>
+                            <?php endif; ?>
+                        </div>
+                      </div>                         
+                      
                       
                       <div class="form-actions">
                           <button type="submit" class="btn btn-success">Update</button>
