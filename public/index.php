@@ -1,4 +1,4 @@
-<h1>Welcome to the streaming Movie Database</h1>
+<h1>Welcome to the Movie Database</h1>
 <?php 
 session_start();
 
@@ -14,7 +14,8 @@ $map = [
     '' => __DIR__.'/../src/Controller/login.php',
     '/register' => __DIR__.'/../src/Controller/register.php',
     '/login' => __DIR__.'/../src/Controller/login.php',
-    '/logout' => __DIR__.'/../src/Controller/logout.php'
+    '/logout' => __DIR__.'/../src/Controller/logout.php',
+    '/update' => __DIR__.'/../src/Controller/update.php'
 ];
 
 $url = $_SERVER['REQUEST_URI'];
@@ -25,8 +26,10 @@ if (substr($url, 0, strlen('/index.php')) == '/index.php'){
     $url = '';
 }
 
-if (array_key_exists($url, $map)){
-    include $map[$url];
+$urlPart = explode("?", $url);
+
+if (array_key_exists($urlPart[0], $map)){
+    include $map[$urlPart[0]];
 }
 
 

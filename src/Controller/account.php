@@ -68,7 +68,13 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
         <p>Description: <?php echo $moviedescription; ?></p>
         <p>Year of the movie: <?php echo $movieyear; ?></p>
         <p>Quality of the movie: <?php echo $moviequality; ?></p>
-        <p><button type=button onclick="">UPDATE this movie</button></p>
+        <?php 
+        echo '<a class="btn btn-success" href="/index.php/update?id='.$movieid.'">Update</a>';
+        ?>
+   
+        
+        
+        
         <hr/>
         </div>
         <?php 
