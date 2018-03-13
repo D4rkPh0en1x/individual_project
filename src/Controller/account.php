@@ -21,22 +21,21 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; text-align: center; }
-    </style>
+    
+   
 </head>
 <body>
     <div class="page-header">
-        <h3>Hi, <b><?php echo htmlspecialchars($_SESSION['email']); ?></b>. Welcome to our site.</h3>
+        <h4>Hi, <b><?php echo htmlspecialchars($_SESSION['email']); ?></b>. Welcome to the world of movies.</h4>
     </div>
-   	<p><a href="/index.php/logout" class="btn btn-danger">Sign Out of Your Account</a></p>
+   	<p><a href="/index.php/logout" class="btn btn-danger">Logout</a>
+   	<a href="/index.php/create" class="btn btn-success">Create</a></p>
    	<hr/>
     <div>
 
     <?php
 
-    $sql = 'SELECT * FROM movies';
+    $sql = 'SELECT * FROM movies order by name asc';
     $statement = $connection->prepare($sql);
 
     $statement->execute();
@@ -46,7 +45,7 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
 
     //case of fetchall
     $resultall = $statement->fetchall();
-
+    
     foreach ($resultall as $row){
         $movieid=$row['id'];
         $moviename=$row['name'];
@@ -70,18 +69,15 @@ if(!isset($_SESSION['email']) || empty($_SESSION['email'])){
         <p>Year of the movie: <?php echo $movieyear; ?></p>
         <p>Quality of the movie: <?php echo $moviequality; ?></p>
         <?php
+        echo '<a class="btn btn-info" href="/index.php/read?id='.$movieid.'">Read</a>';
         echo '<a class="btn btn-success" href="/index.php/update?id='.$movieid.'">Update</a>';
+        echo '<a class="btn btn-danger" href="/index.php/delete?id='.$movieid.'">Delete</a>';
+        
         ?>
-
-
-
-
         <hr/>
         </div>
         <?php
     }
-
-
     ?>
 
     </div>

@@ -5,8 +5,9 @@
  * General styles
  */
 body, html,  {
-
+    text-align: center;
     background: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33), rgb(104, 145, 162));
+    height: 1200px;
     display: flex;
     align-items: center;
     flex-direction: column;

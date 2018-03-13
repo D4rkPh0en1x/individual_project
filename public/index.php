@@ -33,12 +33,14 @@ $configs = require __DIR__. '/../config/app.conf.php';
 Service\DBConnector::setConfig($configs['db']);
 
 $map = [
-
-    '/account' => __DIR__.'/../src/Controller/account.php',
     '' => __DIR__.'/../src/Controller/login.php',
+    '/account' => __DIR__.'/../src/Controller/account.php',
     '/register' => __DIR__.'/../src/Controller/register.php',
     '/login' => __DIR__.'/../src/Controller/login.php',
     '/logout' => __DIR__.'/../src/Controller/logout.php',
+    '/create' => __DIR__.'/../src/Controller/create.php',
+    '/read' => __DIR__.'/../src/Controller/read.php',
+    '/delete' => __DIR__.'/../src/Controller/delete.php',
     '/update' => __DIR__.'/../src/Controller/update.php'
 ];
 
