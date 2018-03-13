@@ -19,7 +19,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $stmt->bindParam(':email', $param_email, PDO::PARAM_STR);
       $param_email = trim($_POST["email"]);
       if($stmt->execute()){
-        echo 'entering third if';
         if($stmt->rowCount() == 1){
           if($row = $stmt->fetch()){
             $db_password = $row['password'];
@@ -45,9 +44,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <div class="container">
   <div class="card card-container">
       <form method="post" class="form-signin">
+        <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
           <input type="email" name="email" id="inputEmail" class="form-control" value="<?php echo htmlentities($_POST['email'] ?? '') ?>" placeholder="Email address" required autofocus>
+          <span class="help-block"><?php echo $email_err; ?></span>
+        </div>
+        <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
           <input type="password" name="password" id="inputPassword" class="form-control" value="<?php echo htmlentities($_POST['password'] ?? '') ?>" placeholder="Password" required>
           <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+          <span class="help-block"><?php echo $password_err; ?></span>
+        </div>
       </form>
       <a href="/index.php/register" class="register-account">
           Register account
